@@ -1,3 +1,7 @@
 .navbar {
   background-color: var(--bg-color) !important;
+
+  &__brand a {
+    color: var(--white);
+  }
 }

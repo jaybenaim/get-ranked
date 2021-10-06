@@ -1,4 +1,5 @@
 import { db } from "firebase/clientApp"
+import { IEvent } from 'lib/types/events'
 
 const Events = db.collection("Events")
 
@@ -20,5 +21,5 @@ export async function getAllEventIds() {
 export async function getEventById(id: string) {
   const event = Events.doc(id)
 
-  return (await event.get()).data()
+  return (await event.get()).data() as IEvent
 }

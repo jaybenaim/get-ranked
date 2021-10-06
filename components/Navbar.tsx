@@ -66,7 +66,7 @@ export default function MenuAppBar() {
 
           </IconButton>
 
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} className="navbar__brand">
             <Link href="/">
               <a>
                 Get Ranked

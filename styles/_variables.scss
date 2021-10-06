@@ -1,7 +1,11 @@
 $bgColor: #ddd;
 $bgColorLight: #eee;
 
+$white: #fff;
+
 :root {
   --bg-color: #{$bgColor};
   --bg-color--light: #{$bgColorLight};
+
+  --white: #{$white};
 }
