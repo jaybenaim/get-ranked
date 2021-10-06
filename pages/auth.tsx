@@ -7,14 +7,16 @@ import { auth, firebase } from "../firebase/clientApp";
 const uiConfig = {
   // Redirect to / after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
   signInSuccessUrl: "/",
-  signInOptions: [{
-    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    requireDisplayName: true,
-    customParameters: {
-      // Forces password re-entry.
-      auth_type: 'reauthenticate'
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: true,
+    },
+    {
+      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      requireDisplayName: true,
     }
-  }]
+  ]
 };
 
 function SignInScreen() {
