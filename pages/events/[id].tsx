@@ -1,5 +1,5 @@
 import { getAllEventIds, getEventById } from 'lib/events'
-import { IEvent } from 'lib/types/events'
+import { IEvent } from 'lib/types/Event'
 import { useRouter } from 'next/dist/client/router'
 import { useEffect, useState } from 'react'
 

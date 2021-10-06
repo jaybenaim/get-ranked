@@ -13,7 +13,7 @@ const clientCredentials = {
 };
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(clientCredentials);
+  const app = firebase.initializeApp(clientCredentials);
 }
 
 const auth = firebase.auth();

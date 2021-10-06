@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -6,17 +6,29 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'lib/theme.js';
 import Navbar from 'components/Navbar';
 import "styles/main.scss"
+import { wrapper } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import * as t from "redux/types";
 
-export default function MyApp(props) {
+const MyApp = (props) => {
   const { Component, pageProps } = props;
+  const dispatch = useDispatch()
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
+
+  useEffect(() => {
+    dispatch({ type: t.SET_WINDOW_WIDTH })
+    window.addEventListener('resize', () => dispatch({ type: t.SET_WINDOW_WIDTH }))
+
+    return () => window.removeEventListener('resize', () => dispatch({ type: t.SET_WINDOW_WIDTH }))
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <React.Fragment>
@@ -38,3 +50,5 @@ MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
+
+export default wrapper.withRedux(MyApp)

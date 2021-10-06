@@ -1,5 +1,5 @@
 import { db } from "firebase/clientApp"
-import { IEvent } from 'lib/types/events'
+import { IEvent } from 'lib/types/Event'
 
 const Events = db.collection("Events")
 

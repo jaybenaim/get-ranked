@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, firestore } from 'firebase/clientApp';
-import { IEvent } from "lib/types/events";
+import { IEvent } from "lib/types/Event";
 
 const CreateEvent = () => {
   const [user, loading, error] = useAuthState(auth);
