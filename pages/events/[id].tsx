@@ -1,4 +1,5 @@
 import { getAllEventIds, getEventById } from 'lib/events'
+import { IEvent } from 'lib/types/events'
 import { useRouter } from 'next/dist/client/router'
 
 export const getStaticPaths = async (ctx) => {
@@ -21,6 +22,13 @@ export const getStaticProps = async ({ params }) => {
 }
 
 const EventDetails = ({ eventData }) => {
+  if (!eventData) {
+    eventData = {
+      title: "" ,
+      location: ""
+    } as IEvent
+  }
+
   const router = useRouter()
   const { id } = router.query
 
