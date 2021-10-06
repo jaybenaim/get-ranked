@@ -1,0 +1,41 @@
+main {
+  z-index: 2;
+  // color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.hero {
+  background-image: url('../public/images/GetRankedHero.png');
+  background-size: cover;
+  background-position: left;
+  background-repeat: no-repeat;
+  z-index: 1;
+  height: 90vh;
+  width: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-event-form {
+  padding-top: 2em;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title, .location, button {
+      margin-top: 1em;
+    }
+  }
+}
+
+.event.card {
+  margin: .5em 0;
+  width: 100%;
+  border: 1px solid #000;
+}

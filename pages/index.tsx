@@ -1,15 +1,17 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import firebase from "../firebase/clientApp";
-// Import the useAuthStateHook
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore"
+import { auth, firestore } from 'firebase/clientApp';
+import Link from 'next/link';
 
 export default function Home() {
-  // Destructure user, loading, and error out of the hook.
-  const [user, loading, error] = useAuthState(firebase.auth());
-  // console.log the current user and loading status
-  console.log("Loading:", loading, "|", "Current user:", user);
+  const [user, loading, error] = useAuthState(auth);
+
+  const [Events, EventsLoading, EventsError] = useCollection(
+    firestore.collection('Events'),
+    {}
+  )
 
   return (
     <div className={styles.container}>
@@ -20,11 +22,27 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Get Ranked</h1>
+        <div className="hero">
+          <h2>Events</h2>
+          {!EventsLoading && Events && Events.docs.map((doc) => {
+            const { title, location } = doc.data()
+
+            return (
+              <div key={doc.id} className="event card">
+                <Link href={`/events/${doc.id}`}>
+                  <a>
+                    <p>{title}</p>
+                    <p>{location}</p>
+                  </a>
+                </Link>
+              </div>
+            )
+          })}
+        </div>
       </main>
 
       <footer className={styles.footer}>
-
+          Jacob Benaim ©
       </footer>
     </div>
   )
