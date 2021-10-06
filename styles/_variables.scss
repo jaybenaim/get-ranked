@@ -1,5 +1,7 @@
 $bgColor: #ddd;
+$bgColorLight: #eee;
 
 :root {
-  --bg-color: #{$bgColor}
+  --bg-color: #{$bgColor};
+  --bg-color--light: #{$bgColorLight};
 }
