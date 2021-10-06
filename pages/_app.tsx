@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from 'components/theme.js';
+import theme from 'lib/theme.js';
 import Navbar from 'components/Navbar';
-import "styles/_main.scss"
+import "styles/main.scss"
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
