@@ -22,4 +22,4 @@ const storage = firebase.storage();
 
 const db = firestore
 
-export { firebase, storage, auth, firestore, db };
+export { storage, auth, firestore, db };
