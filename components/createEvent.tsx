@@ -13,7 +13,8 @@ const CreateEvent = () => {
 
     await db.collection('Events').add({
       ...event,
-      creator: user.uid
+      creator: user.uid,
+      attendees: []
     })
   }
 

@@ -3,22 +3,31 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { IToggleOption } from 'lib/types/Global';
 
 const ITEM_HEIGHT = 48;
 
 export default function ToggleMenu({
   options = [
-    'Edit',
-    'Delete'
-  ] as string[]
+    {
+      title: 'Edit',
+    },
+    {
+      title: 'Delete'
+    }
+  ] as IToggleOption[]
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (optionalCloseFn: IToggleOption) => {
     setAnchorEl(null);
+
+    if (optionalCloseFn.closeFn) {
+      optionalCloseFn.closeFn()
+    }
   };
 
   return (
@@ -48,9 +57,9 @@ export default function ToggleMenu({
           },
         }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            {option}
+        {options.map((option: IToggleOption) => (
+          <MenuItem key={option.title} selected={option.title === options[0].title} onClick={() => handleClose(option)}>
+            {option.title}
           </MenuItem>
         ))}
       </Menu>

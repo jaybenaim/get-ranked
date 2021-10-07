@@ -8,13 +8,9 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ToggleMenu from './ToggleMenu';
+import { IToggleOption } from 'lib/types/Global';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -43,8 +39,16 @@ export default function CardDefault({
   dropdownLabel = undefined as any,
   dropdownContent = undefined as any,
   hideDropdown = false,
-  toggleOptions = ['Edit', 'Delete'] as string[],
-  children
+  toggleOptions = [
+    {
+      title: 'Edit'
+    },
+    {
+      title: 'Delete'
+    }
+  ] as IToggleOption[],
+  avatarSize = { width: 56, height: 56 },
+  children = undefined
  }) {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -53,10 +57,12 @@ export default function CardDefault({
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{ maxWidth: 345 }}
+    >
       <CardHeader
         avatar={
-          <Avatar alt={title} src={avatar}/>
+          <Avatar alt={title} src={avatar} sx={avatarSize}/>
         }
         action={
           <ToggleMenu options={toggleOptions}/>

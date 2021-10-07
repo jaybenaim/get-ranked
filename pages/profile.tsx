@@ -11,6 +11,9 @@ import { styled } from '@mui/material/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
+import { IToggleOption } from "lib/types/Global";
+import ProfileEdit from "components/ProfileEdit";
+import { connect } from "react-redux";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -27,13 +30,14 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const Profile = () => {
-  const [ user, loading, error ] = useAuthState(auth);
-  const [ profile, setProfile ] = useState({} as IProfile)
-  const [ events, setEvents ] = useState({} as { created: any, attending: any})
+const Profile = ({ isMobile }) => {
+  const [user, loading, error] = useAuthState(auth);
+  const [profile, setProfile] = useState({} as IProfile)
+  const [events, setEvents] = useState({} as { created: any, attending: any })
+  const [expanded, setExpanded] = useState(false);
+  const [showEditForm, toggleEditForm] = useState(false)
 
   useEffect(() => {
-
     if (user) {
       setProfile({
         email: user.email,
@@ -43,7 +47,6 @@ const Profile = () => {
 
       fetchEvents()
     }
-
     // eslint-disable-next-line
   }, [user])
 
@@ -52,7 +55,14 @@ const Profile = () => {
       attending: await getUserAttendingEvents(user.uid),
       created: await getUserCreatedEvents(user.uid)
     })
+  }
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const handleDelete = () => {
+    return
   }
 
   const userEvents = () => {
@@ -60,7 +70,8 @@ const Profile = () => {
       <Grid className="profile__events--dropdown-content" container>
         <Grid
           item
-          xs={6}
+          xs={12}
+          md={6}
         >
           <Typography variant="h5" component="p">Attending:</Typography>
           <List>
@@ -75,7 +86,7 @@ const Profile = () => {
                     </Avatar>
                   </ListItemAvatar>
 
-                  <ListItemText primary={title} secondary={location}/>
+                  <ListItemText primary={title} secondary={location} />
                 </ListItem>
               )
             })}
@@ -85,7 +96,8 @@ const Profile = () => {
 
         <Grid
           item
-          xs={6}
+          xs={12}
+          md={6}
         >
           <Typography variant="h5" component="p">Created:</Typography>
           <List>
@@ -100,38 +112,61 @@ const Profile = () => {
                     </Avatar>
                   </ListItemAvatar>
 
-                  <ListItemText primary={title} secondary={location}/>
+                  <ListItemText primary={title} secondary={location} />
                 </ListItem>
               )
             })}
           </List>
-          </Grid>
+        </Grid>
       </Grid>
     )
   }
 
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   return (
-    <Container className="profile">
-      <CardDefault
-        title={profile.displayName}
-        subheader={profile.email}
-        avatar={profile.avatarUrl}
-        toggleOptions={['Edit', 'Delete Profile']}
-        hideDropdown
-        hideImage
-        hideIcons
+    <Grid
+      container
+      className="profile"
+      p={isMobile ? 1 : 5}
+    >
+      <Grid
+        item
+        xs={12}
+        md={3}
+        p={isMobile ? 1 : 3}
       >
-        {profile.displayName}
-      </CardDefault>
+        <CardDefault
+          title={profile.displayName}
+          subheader={profile.email}
+          avatar={profile.avatarUrl}
+          toggleOptions={[
+            {
+              title: 'Edit',
+              closeFn: () => toggleEditForm(!showEditForm)
+            },
+            {
+              title: 'Delete',
+              closeFn: handleDelete
+            }
+          ] as IToggleOption[]}
+          hideDropdown
+          hideImage
+          hideIcons
+        />
+
+        {/* Edit Form */}
+        {showEditForm && (
+          <ProfileEdit />
+        )}
+      </Grid>
 
 
-      <Box p={4} className="profile__events">
+      <Grid
+        item
+        xs={12}
+        md={9}
+        p={isMobile ? 1 : 3}
+        className="profile__events"
+      >
         <Typography variant="h2">Events</Typography>
 
         <ExpandMore
@@ -148,9 +183,16 @@ const Profile = () => {
             {userEvents()}
           </CardContent>
         </Collapse>
-      </Box>
-    </Container>
+      </Grid>
+
+    </Grid>
   );
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    isMobile: state.responsive.isMobile
+  }
+}
+
+export default connect(mapStateToProps, {})(Profile);
