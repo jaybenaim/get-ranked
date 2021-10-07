@@ -5,7 +5,7 @@ const initialState = {
 };
 
 // eslint-disable-next-line
-export default function (state = initialState, action) {
+export default function errorReducers(state = initialState, action) {
   switch (action.type) {
     case t.GET_ERRORS:
       return state;

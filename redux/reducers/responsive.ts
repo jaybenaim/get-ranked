@@ -7,7 +7,7 @@ const initialState = {
   isMobile: false
 };
 // eslint-disable-next-line
-export default function(state = initialState, action) {
+export default function responsiveReducer(state = initialState, action) {
   const setScreenSize = () => {
       // Iphone x
       if (state.windowWidth <= 375) {
