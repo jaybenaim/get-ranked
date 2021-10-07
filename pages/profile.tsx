@@ -1,10 +1,10 @@
-import { Container, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, CardContent, Box } from "@mui/material";
+import { Container, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, CardContent, Box, Grid } from "@mui/material";
 import { auth } from "firebase/clientApp";
 import { IProfile } from "lib/types/Profile";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CardDefault from "components/CardDefault"
-import { getUserCreatedEvents } from "lib/events";
+import { getUserAttendingEvents, getUserCreatedEvents } from "lib/events";
 import ImageIcon from '@mui/icons-material/Image';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
@@ -49,42 +49,64 @@ const Profile = () => {
 
   const fetchEvents = async () => {
     setEvents({
-      ...events,
+      attending: await getUserAttendingEvents(user.uid),
       created: await getUserCreatedEvents(user.uid)
     })
+
   }
 
   const userEvents = () => {
-    const attending = (
-        <Typography paragraph>Event 1</Typography>
-    )
-
     return (
-      <div className="profile__events--dropdown-content">
-        <Typography variant="h5" component="p">Attending:</Typography>
-        {/* {attending} */}
+      <Grid className="profile__events--dropdown-content" container>
+        <Grid
+          item
+          xs={6}
+        >
+          <Typography variant="h5" component="p">Attending:</Typography>
+          <List>
+            {events.attending?.docs && events.attending.docs.map((doc) => {
+              const { title, location } = doc.data()
 
-        <Typography variant="h5" component="p">Created:</Typography>
+              return (
+                <ListItem key={doc.id}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <ImageIcon />
+                    </Avatar>
+                  </ListItemAvatar>
 
-        <List>
-          {events.created?.docs && events.created.docs.map((doc) => {
-            const { title, location } = doc.data()
+                  <ListItemText primary={title} secondary={location}/>
+                </ListItem>
+              )
+            })}
+          </List>
+        </Grid>
 
-            return (
-              <ListItem key={doc.id}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <ImageIcon />
-                  </Avatar>
-                </ListItemAvatar>
 
-                <ListItemText primary={title} secondary={location}/>
-              </ListItem>
-            )
-          })}
-        </List>
+        <Grid
+          item
+          xs={6}
+        >
+          <Typography variant="h5" component="p">Created:</Typography>
+          <List>
+            {events.created?.docs && events.created.docs.map((doc) => {
+              const { title, location } = doc.data()
 
-      </div>
+              return (
+                <ListItem key={doc.id}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <ImageIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+
+                  <ListItemText primary={title} secondary={location}/>
+                </ListItem>
+              )
+            })}
+          </List>
+          </Grid>
+      </Grid>
     )
   }
 

@@ -1,7 +1,6 @@
 .profile {
   @include flex($align: flex-start, $dir: column, $justify: flex-start);
-  height: 50vh;
-  max-height: 50vh;
+  max-height: 48vh;
   margin-top: 2em;
 
   &__events {

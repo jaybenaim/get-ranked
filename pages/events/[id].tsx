@@ -1,9 +1,13 @@
-import { getAllEventIds, getEventById } from 'lib/events'
+import { auth } from 'firebase/clientApp'
+import { attendEvent, getAllEventIds, getEventById } from 'lib/events'
 import { IEvent } from 'lib/types/Event'
 import { useRouter } from 'next/dist/client/router'
 import { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import Button from '@mui/material/Button'
 
 const EventDetails = () => {
+  const [user, userLoading, userError] = useAuthState(auth)
   const [eventData, setEventData] = useState({
     title: "",
     location: ""
@@ -25,10 +29,18 @@ const EventDetails = () => {
     // eslint-disable-next-line
   }, [id])
 
+  const handleAttendEvent = async () => {
+    const response = await attendEvent(user.uid, id as string)
+
+    console.log(response)
+  }
+
   return (
     <div className="center">
       <h1>{eventData.title}</h1>
       <p>{eventData.location}</p>
+
+      <Button onClick={() => handleAttendEvent()}>Attend</Button>
     </div>
   );
 }
