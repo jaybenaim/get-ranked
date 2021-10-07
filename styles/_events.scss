@@ -1,0 +1,6 @@
+.events {
+  @include flex($dir: column);
+  max-height: 450px;
+  overflow-y: auto;
+  width: 55vw;
+}

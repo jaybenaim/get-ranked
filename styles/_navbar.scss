@@ -4,4 +4,10 @@
   &__brand a {
     color: var(--white);
   }
+
+  &__profile-menu {
+    a {
+      width: 100%;
+    }
+  }
 }

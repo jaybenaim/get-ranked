@@ -11,8 +11,9 @@ const CreateEvent = () => {
   const createNewEvent = async (e: FormEvent) => {
     e.preventDefault()
 
-    await db.collection('Events').doc(user.uid).set({
-      ...event
+    await db.collection('Events').add({
+      ...event,
+      creator: user.uid
     })
   }
 

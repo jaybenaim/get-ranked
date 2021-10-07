@@ -4,6 +4,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore"
 import { auth, firestore } from 'firebase/clientApp';
 import Link from 'next/link';
+import Button from "@mui/material/Button"
+import { useState } from 'react';
+import CreateEvent from 'components/createEvent';
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
@@ -12,6 +15,8 @@ export default function Home() {
     firestore.collection('Events'),
     {}
   )
+
+  const [showCreateEventForm, toggleNewEventForm] = useState(false)
 
   return (
     <div className={styles.container}>
@@ -24,20 +29,28 @@ export default function Home() {
       <main>
         <div className="hero">
           <h2>Events</h2>
-          {!EventsLoading && Events && Events.docs.map((doc) => {
-            const { title, location } = doc.data()
 
-            return (
-              <div key={doc.id} className="event card">
-                <Link href={`/events/${doc.id}`}>
-                  <a>
-                    <p>{title}</p>
-                    <p>{location}</p>
-                  </a>
-                </Link>
-              </div>
-            )
-          })}
+          <div className="events">
+            {!EventsLoading && Events && Events.docs.map((doc) => {
+              const { title, location } = doc.data()
+
+              return (
+                <div key={doc.id} className="event card">
+                  <Link href={`/events/${doc.id}`}>
+                    <a>
+                      <p>{title}</p>
+                      <p>{location}</p>
+                    </a>
+                  </Link>
+                </div>
+              )
+            })}
+          </div>
+
+          <Button onClick={() => toggleNewEventForm(!showCreateEventForm)}>Create New Event</Button>
+          {showCreateEventForm && (
+            <CreateEvent />
+          )}
         </div>
       </main>
 

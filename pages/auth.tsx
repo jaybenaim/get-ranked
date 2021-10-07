@@ -7,6 +7,7 @@ import { auth, firebase } from "../firebase/clientApp";
 const uiConfig = {
   // Redirect to / after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
   signInSuccessUrl: "/",
+  signInFlow: 'popup',
   signInOptions: [
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,

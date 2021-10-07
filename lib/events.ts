@@ -23,3 +23,10 @@ export async function getEventById(id: string) {
 
   return (await event.get()).data() as IEvent
 }
+
+export async function getUserCreatedEvents(uid: string) {
+  const events = await Events.where('creator', '==', uid).get()
+
+  return events
+}
+

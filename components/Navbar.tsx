@@ -15,8 +15,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'firebase/clientApp';
 import Router from 'next/router'
 import Link from 'next/link'
+import { connect } from 'react-redux'
 
-export default function MenuAppBar() {
+const MenuAppBar = ({ isMobile }) => {
   const [user, loading, error] = useAuthState(auth);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -54,17 +55,18 @@ export default function MenuAppBar() {
       </FormGroup>
       <AppBar position="sticky">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
 
-          <MenuIcon />
-
-          </IconButton>
+          {isMobile && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} className="navbar__brand">
             <Link href="/">
@@ -88,6 +90,7 @@ export default function MenuAppBar() {
               </IconButton>
               <Menu
                 id="menu-appbar"
+                className="navbar__profile-menu"
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: 'top',
@@ -115,3 +118,11 @@ export default function MenuAppBar() {
     </Box>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isMobile: state.responsive.isMobile
+  }
+}
+
+export default connect(mapStateToProps, {})(MenuAppBar)

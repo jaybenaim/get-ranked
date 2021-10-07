@@ -1,0 +1,15 @@
+.profile {
+  @include flex($align: flex-start, $dir: column, $justify: flex-start);
+  height: 50vh;
+  max-height: 50vh;
+  margin-top: 2em;
+
+  &__events {
+    @include flex($justify: center);
+
+    &--dropdown-content {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+  }
+}
