@@ -7,9 +7,7 @@ import theme from 'lib/theme.js';
 import Navbar from 'components/Navbar';
 import "styles/main.scss"
 import { wrapper } from 'redux/store';
-import { Provider } from 'react-redux';
 import * as t from "redux/types";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { firebase } from "firebase/clientApp"
 import { store } from "redux/store"
 import { createFirestoreInstance } from "redux-firestore";
@@ -55,14 +53,14 @@ const MyApp = (props) => {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
 
-      <ReactReduxFirebaseProvider {...rrfProps}>
+      {/* <ReactReduxFirebaseProvider {...rrfProps}> */}
         <ThemeProvider theme={theme}>
           <Navbar />
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
-      </ReactReduxFirebaseProvider>
+      {/* </ReactReduxFirebaseProvider> */}
     </React.Fragment>
   );
 }

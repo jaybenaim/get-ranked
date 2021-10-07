@@ -20,6 +20,4 @@ const makeStore = () => store
 
 const wrapper = createWrapper(makeStore)
 
-// create a makeStore function
-
 export { wrapper, store }

@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "redux/types.js"  ],
   "exclude": [
     "node_modules"
   ],
