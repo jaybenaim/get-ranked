@@ -49,7 +49,5 @@ export async function attendEvent(uid: string, eventId: string) {
 export async function getUserAttendingEvents(uid: string) {
   const events = await Events.where('attendees', 'array-contains-any', [uid]).get()
 
-  console.log(events)
-
   return events
 }

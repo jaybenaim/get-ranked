@@ -31,8 +31,6 @@ const EventDetails = () => {
 
   const handleAttendEvent = async () => {
     const response = await attendEvent(user.uid, id as string)
-
-    console.log(response)
   }
 
   return (
